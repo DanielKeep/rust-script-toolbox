@@ -5,7 +5,7 @@ Run this script with `cargo script`.
 ```cargo
 [package]
 authors = ["Daniel Keep <daniel.keep@gmail.com>"]
-version = "0.1.0"
+version = "0.2.0"
 
 [features]
 trace-logging = ["env_logger", "log"]
@@ -174,7 +174,26 @@ fn rewrite_dir(args: &Args, dir: &Path, base_uri: &str) -> Result<()> {
 
 fn rewrite_html(args: &Args, path: &Path, uri: &str) -> Result<()> {
     trace_!("rewrite_html(_, {:?}, {:?})", path, uri);
-    use std::io::Write;
+    use std::io::{Read, Write};
+
+    // Check to see if this file is *already* doing a redirection.
+    let cur_body = {
+        let f = try!(fs::File::open(path));
+        // We won't bother looking past the first 512 bytes.
+        let mut buf = String::with_capacity(512);
+        try!(f.take(buf.capacity() as u64).read_to_string(&mut buf));
+        buf
+    };
+    if {
+        cur_body.find("</head>")
+            .map(|off| cur_body[..off]
+                .contains(r#"<meta http-equiv="refresh""#))
+            .unwrap_or(false)
+    } {
+        // Already redirecting, no need to do more.
+        println!("- skip {}", path.display());
+        return Ok(())
+    }
 
     let body = REDIR_TEMPLATE
         .replace("$CRATE", &args.crate_name)
@@ -201,7 +220,10 @@ fn get_args() -> Result<Args> {
             to point to `https://docs.rs/` instead.")
         .after_help("By default, performs a dry run, listing everything it \
             intends to do.  You should review this output and then re-run \
-            with the --commit flag.")
+            with the --commit flag.\n\
+            \n\
+            Also note that files which contain legacy redirections generated \
+            by `rustdoc` itself will be skipped.")
         .arg(Arg::with_name("commit")
             .long("commit")
             .help("Actually take the requested actions, instead of performing a dry run.")
