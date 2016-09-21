@@ -36,7 +36,7 @@ use std::path::{Path, PathBuf};
 use std::result::Result as StdResult;
 
 /// Base documentation URI.  Use `*` for the latest version.
-const DOC_URI: &'static str = "https://docs.rs/$CRATE/*/$CRATE/$TAIL";
+const DOC_URI: &'static str = "https://docs.rs/$CRATE/*/$CRATESAFE/$TAIL";
 
 /**
 Source file URI.  The reason we aren't more accurate is that docs.rs changes the *structure* of the URIs, and trying to get that exactly right would just be a PITA.
@@ -93,23 +93,30 @@ fn main() {
 
 fn try_main() -> Result<()> {
     let args = try!(get_args());
+    let crate_safe_name = args.crate_name.replace("-", "_");
 
     {
-        let dir = args.doc_root.join(&args.crate_name);
-        let base_uri = DOC_URI.replace("$CRATE", &args.crate_name);
+        let dir = args.doc_root.join(&crate_safe_name);
+        let base_uri = DOC_URI
+            .replace("$CRATESAFE", &crate_safe_name)
+            .replace("$CRATE", &args.crate_name)
+            ;
         println!("Rewriting {}...", dir.display());
         try!(rewrite_dir(&args, &dir, &base_uri));
     }
 
     {
-        let dir = args.doc_root.join("src").join(&args.crate_name);
-        let base_uri = SRC_URI.replace("$CRATE", &args.crate_name);
+        let dir = args.doc_root.join("src").join(&crate_safe_name);
+        let base_uri = SRC_URI
+            .replace("$CRATESAFE", &crate_safe_name)
+            .replace("$CRATE", &args.crate_name)
+            ;
         println!("Rewriting {}...", dir.display());
         try!(rewrite_dir(&args, &dir, &base_uri));
     }
 
     if args.delete_others {
-        let dir = args.doc_root.join("implementors").join(&args.crate_name);
+        let dir = args.doc_root.join("implementors").join(&crate_safe_name);
         if dir.is_dir() {
             println!("Removing {}...", dir.display());
             if !args.dry_run {
