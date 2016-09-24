@@ -1,5 +1,7 @@
 #!/usr/bin/env run-cargo-script
 /*!
+Rewrites all HTML files in rustdoc-generated documentation to point to `https://docs.rs/` instead.
+
 Run this script with `cargo script`.
 
 ```cargo
