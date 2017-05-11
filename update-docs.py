@@ -9,6 +9,10 @@
 # files in the project carrying such notice may not be copied, modified,
 # or distributed except according to those terms.
 
+__requirements__ = """
+toml==0.9.2
+"""
+
 import distutils.dir_util
 import os
 import shutil
