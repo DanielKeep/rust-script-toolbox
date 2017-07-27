@@ -54,6 +54,27 @@ ROLLING = '(rolling)'
 
 PROFILES = [
     {
+        'date': '2017-07-27',
+        'releases': {
+            'arch': ROLLING,
+            'debian': 'jessie',
+            'debian-latest': 'stretch',
+            'debian-testing': 'buster',
+            'debian-unstable': 'sid',
+            'fedora': '25',
+            'fedora-latest': '26',
+            'freebsd': '2017Q2',
+            'freebsd-latest': '2017Q3',
+            'nixos': ROLLING,
+            'openbsd': '6.0',
+            'openbsd-latest': '6.1',
+            'opensuse': '42.2', # until 2018-01-26
+            'opensuse-latest': '42.3', # until 2019-01-31
+            'ubuntu': 'xenial',
+            'ubuntu-latest': 'zesty',
+        },
+    },
+    {
         'date': '2017-07-12',
         'releases': {
             'arch': ROLLING,
