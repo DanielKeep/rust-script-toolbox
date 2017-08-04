@@ -42,7 +42,7 @@ Options:
 __author__ = "Daniel Keep"
 __copyright__ = "Copyright 2017, Daniel Keep"
 __license__ = "MIT"
-__version__ = "0.1.10"
+__version__ = "0.1.11"
 __requirements__ = """
 docopt==0.6.2
 lxml==3.7.3
@@ -180,6 +180,7 @@ DISTROS = {
         'xpath': r'//pre/text()',
         're': r'Version:\s+(?P<version>\d+[.]\d+[.]\d+)',
     },
+    'opensuse-latest': 'opensuse',
     'ubuntu': {
         'url': 'http://packages.ubuntu.com/{release}/rustc',
         'inherit': 'debian',
