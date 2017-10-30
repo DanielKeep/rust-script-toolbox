@@ -42,7 +42,7 @@ Options:
 __author__ = "Daniel Keep"
 __copyright__ = "Copyright 2017, Daniel Keep"
 __license__ = "MIT"
-__version__ = "0.1.11"
+__version__ = "0.1.12"
 __requirements__ = """
 docopt==0.6.2
 lxml==3.7.3
@@ -53,6 +53,27 @@ tabulate==0.7.7
 ROLLING = '(rolling)'
 
 PROFILES = [
+    {
+        'date': '2017-10-30',
+        'releases': {
+            'arch': ROLLING,
+            'debian': 'jessie',
+            'debian-latest': 'stretch',
+            'debian-testing': 'buster',
+            'debian-unstable': 'sid',
+            'fedora': '25',
+            'fedora-latest': '26',
+            'freebsd': '2017Q3',
+            'freebsd-latest': '2017Q4',
+            'nixos': ROLLING,
+            'openbsd': '6.1',
+            'openbsd-latest': '6.2',
+            'opensuse': '42.2', # until 2018-01-26
+            'opensuse-latest': '42.3', # until 2019-01-31
+            'ubuntu': 'xenial',
+            'ubuntu-latest': 'artful',
+        },
+    },
     {
         'date': '2017-07-27',
         'releases': {
