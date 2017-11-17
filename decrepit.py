@@ -53,6 +53,35 @@ tabulate==0.7.7
 ROLLING = '(rolling)'
 
 PROFILES = [
+    # - arch: always ROLLING
+    # - debian: https://en.wikipedia.org/wiki/Debian_version_history#Release_table
+    # - fedora: https://en.wikipedia.org/wiki/Fedora_(operating_system)#Releases
+    # - freebsd: `{year}Q{quarter}`, with support for two quarters.
+    # - nixos: always ROLLING
+    # - openbsd: https://en.wikipedia.org/wiki/OpenBSD (latest two releases)
+    # - opensuse: https://en.wikipedia.org/wiki/OpenSUSE#Releases
+    # - ubuntu: https://en.wikipedia.org/wiki/Ubuntu_(operating_system)#Releases
+    {
+        'date': '2017-11-17',
+        'releases': {
+            'arch': ROLLING,
+            'debian': 'jessie',
+            'debian-latest': 'stretch',
+            'debian-testing': 'buster',
+            'debian-unstable': 'sid',
+            'fedora': '25', # until ~2017-12-17
+            'fedora-latest': '27',
+            'freebsd': '2017Q3',
+            'freebsd-latest': '2017Q4',
+            'nixos': ROLLING,
+            'openbsd': '6.1',
+            'openbsd-latest': '6.2',
+            'opensuse': '42.2', # until 2018-01-26
+            'opensuse-latest': '42.3', # until 2019-01-31
+            'ubuntu': 'xenial',
+            'ubuntu-latest': 'artful',
+        },
+    },
     {
         'date': '2017-10-30',
         'releases': {
